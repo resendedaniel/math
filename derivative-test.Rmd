@@ -1,0 +1,74 @@
+---
+title: "derivative_with_many_functions"
+output: html_document
+---
+
+### Some settings first to make it work
+```{r}
+plotChart <- function(f, n=1001) {
+    curve(f, -tau, tau)
+    
+    breaks <- c(1,
+                3/4,
+                1/2,
+                1/4,
+                0)
+    for(b in breaks) {
+        abline(v=-tau*b)
+        abline(v=tau*b)
+    }
+}
+
+sinminus <- function(x) {
+    -sin(x)
+}
+```
+
+# Primary functions
+Primeiro eu vou tentar ver as primary functions cosseno (cos) e -sen.
+As i increase
+```{r, cache=TRUE}
+tau = 2 * pi
+
+# f <- function(x) {
+#     5 * cos(x -tau/6) + 2
+# }
+
+f <- function(x) {
+    cos(x)
+}
+f1 <- function(x) {
+    -sin(x)
+}
+
+functions <- c(f, f1)
+# functionsNames <- c('regular', 'derivade 1')
+plotChart(f)
+curve(f1, xlim = c(-tau, tau), n = 1001, col = "blue", add = TRUE)
+
+# Local y limits
+abline(h=-1, col=rgb(0,0,0,.5))
+abline(h=0, col=rgb(0,0,0,.5))
+abline(h=1, col=rgb(0,0,0,.5))  
+```
+
+## The problem derivative
+```{r garbage}
+f <- function(x) {
+    5 * cos(2*x + 3*pi) + 2
+}
+
+f1 <- function(x) {
+#     -sin(x)
+#     -sin(x) + 2
+    5 * -sin(2*x + 3*pi) + 2
+}
+
+plotChart(f)
+curve(f1, xlim = c(-tau, tau), n = 1001, col = "blue", add = TRUE)
+
+# Local y limits
+abline(h=-3, col=rgb(0,0,0,.5))
+abline(h=(-3+7)/2, col=rgb(0,0,0,.5))
+abline(h=7, col=rgb(0,0,0,.5))  
+```
