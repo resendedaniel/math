@@ -16,9 +16,9 @@ source('~/workspace/math/constants.R')
 cat("\014")
 
 ## Getting / Generating data
-n <- 5
+n <- 100
 x <- localRandom(n)
-y <- x * runif(length(x))
+y <- localRandom(n)
 m <- matrix(c(x, y), ncol=2)
 
 # Summary data
@@ -48,7 +48,7 @@ yRange <- c(-1, 1) * (median[2] + 3 * sd[2])
 
 par(mfrow=c(1,1))
 plot(x, y, xlim=xRange, ylim=yRange, pch=20, main='Translation', col=pallete[1])
-points(-x, -y, xlim=xRange, ylim=yRange, pch=20, col = pallete[3], add=TRUE)
+points(-x, -y, xlim=xRange, ylim=yRange, pch=20, col = pallete[3])
 abline(h = 0, v = 0, col = "gray30")
 
 sapply(1:length(x), function(i) {
@@ -57,4 +57,5 @@ sapply(1:length(x), function(i) {
 #     abline(a=c(0,slope), col=gray)
 #     abline(a=c(0,-slope), col=gray)
     segments(x[i], y[i], -x[i], -y[i], col=gray)
+    NULL
 })
