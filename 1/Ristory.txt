@@ -1,0 +1,11 @@
+# ## Ristory
+# links[0] <- 'http://isu.r-forge.r-project.org/vistat/2013-04-08-plotting-symbols-and-color-palettes/pch.png)'
+# Olha essa [tipografia](links[0]), it dummy, mas ela faz sentido.
+# Pense no tipo de impressora que isso era o máximo de definição possible Imprimia-se barras, linhas e pontos, pois neste momento já se tinha ASCII code ou alguma mais rudimentar.
+# 
+# Quem tinha os primeiros computadores nessa época? O mercado financeiro tinha. Dá para tentar imaginar que o Harry Markowitz, que ainda é vivo em 2015, brincou muito com essas máquinas.
+# 
+# Uma ala do mercado financeiro evoluiu por esta linha que estamos seguindo. O R, a língua que falamos (existem outras também, inclusive não tão ligadas ao mercado, mas que são interessantes também). PS: Olha o símbolo 11.
+# Os primeiros caras que foram calcular criaram funções de imprimir graficamente usando o que tinham.
+# Nós temos hoje muito mais. Mas hoje eu vou montar um function to plot charts
+# 
