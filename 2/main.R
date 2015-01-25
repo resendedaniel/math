@@ -1,6 +1,6 @@
 # ---
 # title: "1"
-# objective: "Slopes"
+# objective: "Function as tangents"
 # author: "Daniel Resende"
 # date: "January 24, 2015"
 # output: html_document
@@ -19,13 +19,13 @@ pallete <- c('1B305D', '32557B', 'A59750', '6B7D31', '3B461B')
 pallete <- paste('#', pallete, sep='')
 gray <- '#000000'
 
-xDomain <- seq(-tau, tau, by=.01)
+xDomain <- seq(-tau, tau, by=.1)
 # yDomain <- range(y)
 xRange <- range(xDomain)
 # yRange <- yDomain
 
 par(mfrow=c(1,1))
-curve(f, xlim=xRange, n=201, main="Derivatives")
+curve(f, xlim=xRange, n=201, main="Function as tangents")
 abline(h = 0, v = 0, col = "gray30")
 
 sapply(xDomain, function(x, n=.1) {
