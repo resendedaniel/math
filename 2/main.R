@@ -8,7 +8,6 @@
 setwd("~/workspace/math/2")
 
 source('~/workspace/verios/verios-r/api/Asset.R')
-source('./api.R')
 
 # Always loads
 source('~/workspace/math/constants.R')
@@ -18,6 +17,11 @@ cat("\014")
 pallete <- c('1B305D', '32557B', 'A59750', '6B7D31', '3B461B')
 pallete <- paste('#', pallete, sep='')
 gray <- '#000000'
+
+# Function
+f <- function(x) {
+    -x^2 - x + 5
+}
 
 xDomain <- seq(-tau, tau, by=.1)
 # yDomain <- range(y)

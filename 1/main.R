@@ -8,7 +8,6 @@
 setwd("~/workspace/math/1")
 
 source('~/workspace/verios/verios-r/api/Asset.R')
-source('~/workspace/math/1/api.R')
 
 # Always loads
 source('~/workspace/math/constants.R')
@@ -16,6 +15,9 @@ source('~/workspace/math/constants.R')
 cat("\014")
 
 ## Getting / Generating data
+localRandom <- function(n = 1) {
+    rnorm(n, mean=0, sd=10)
+}
 n <- 100
 x <- localRandom(n)
 y <- localRandom(n)
