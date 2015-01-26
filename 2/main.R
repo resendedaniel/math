@@ -20,7 +20,7 @@ gray <- '#000000'
 
 # Function
 f <- function(x) {
-    -x^2 - x + 5
+    x^3 + -x^2 - +2*x + 5
 }
 
 xDomain <- seq(-tau, tau, by=.1)
