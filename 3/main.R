@@ -11,5 +11,4 @@ for(i in seq_along(x)) {
 #     segments(x[i], y[i], mean(x), mean(y))
 }
 
-sd <- (x - mean(x)) * (x - mean(x))
-print(sd)
+print(var(x, y))
