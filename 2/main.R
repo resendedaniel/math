@@ -20,20 +20,23 @@ gray <- '#000000'
 
 # Function
 f <- function(x) {
-    x^3 + -x^2 - +2*x + 5
+    x^3 + x^2 - x
 }
 
-xDomain <- seq(-tau, tau, by=.1)
+xDomain <- seq(-2, 2, by=.02)
 # yDomain <- range(y)
 xRange <- range(xDomain)
 # yRange <- yDomain
 
 par(mfrow=c(1,1))
-curve(f, xlim=xRange, n=201, main="Function as tangents")
+curve(f, xlim=xRange, n=201, main="Derivatives: x^3 + x^2 - x")
 abline(h = 0, v = 0, col = "gray30")
 
+png("derivatives.png", width=960, height=590)
 sapply(xDomain, function(x, n=.1) {
     slope <- (f(x + n) - f(x - n)) / (2*n)
     intercept <- f(x) - slope*x
     abline(a=intercept, b=slope, col=gray)
 })
+dev.off()
+
