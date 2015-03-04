@@ -12,8 +12,7 @@ romanLength <- nchar(as.character(as.roman(1:3899)))
 df <- data.frame(romanLength)
 
 g0 <- ggplot(df, aes(x=1:3899, romanLength)) +
-    geom_point(alpha=.75) +
-    geom_smooth()
+    geom_point(col="darkblue", alpha=.75)
 
 g1 <- g0 +
     xlab("linear scale") +
@@ -31,5 +30,15 @@ g1 + ggtitle("Roman Numerals Length")
 dev.off()
 
 png("img/log.png", 1440, 900)
-g1 + ggtitle("Roman Numerals Length - Log Scale")
+g2 + ggtitle("Roman Numerals Length - Log Scale")
+dev.off()
+
+
+## Smooth
+png("img/linear_smooth.png", 1440, 900)
+g1 + ggtitle("Roman Numerals Length") + geom_smooth()
+dev.off()
+
+png("img/log_smooth.png", 1440, 900)
+g2 + ggtitle("Roman Numerals Length - Log Scale") + geom_smooth()
 dev.off()
