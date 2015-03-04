@@ -2,8 +2,16 @@ sinminus <- function(x) {
     -sin(x)
 }
 
+sec <- function(x) {
+    1 / cos(x)
+}
+
+sec_d <- function(x) {
+    2 * tan(x) * sec(x)
+}
+
 curve(cos, -tau, tau, frame=F, col="darkred")
-curve(sin, -tau, tau, add=TRUE, col="darkblue")
+curve(sinminus, -tau, tau, add=TRUE, col="darkblue", lty=5)
 
 h <- c(-1, 1, 0)
 v <- -1 * c(1/8, 1/4, 1/2, 1, 0)
@@ -20,3 +28,4 @@ sincos <- function(x) {
     abline(v=x)
 }
 sincos(2*tau*(runif(1)-.5))
+# sincos(tau/8)
