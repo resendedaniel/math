@@ -1,3 +1,5 @@
+library(lattice)
+
 # data = data.frame(
 #     x = rep( (1:25)/10, each=5),
 #     y = rep( c(1, 2, 3, 4, 5), 5)
