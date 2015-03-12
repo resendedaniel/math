@@ -1,3 +1,4 @@
+```{r}
 library(reshape2)
 library(ggplot2)
 
@@ -15,20 +16,32 @@ area <- function(x, r=1) {
     f(x) * r
 }
 
+circleMatrix <- function(n, r=1) {
+    x <- genseq(n, r)
+    y <- f(x)
+    
+    matrix(c(x, y), 2)
+}
+
 ### Data
 r <- 1
 by <- .01
 x <- genseq(by, r)
-y0 <- f(x, r)
+y <- y0 <- f(x, r)
 t1 <- (r-x)
 t2 <- (r+x)
 y1 <- t1 * t2
+y2 <- sqrt(y0)
+y3 <-sqrt(y2)
+y4 <- sqrt(y3)
+y5 <- sqrt(y4)
+yn <- y0^(1/1000)
 diff <- y0 - y1
 
-df <- data.frame(x, t1, t2, y0, y1, diff)
+df <- data.frame(x, t1, t2, y0, y1, y2, y3, y4, y5, yn, diff)
 # par(mfrow=c(1,1))
 # plot(df)
-print(df)
+# print(df)
 df <- melt(df, id="x")
 
 g1 <- ggplot(df, aes(x, value, color=variable)) + geom_line()
@@ -46,4 +59,11 @@ diff <- melt(diff, id="x")
 g2 <- ggplot(diff, aes(x, value, color=variable)) + geom_line()
 #     scale_x_continuous(limits = c(-r, r)) +
 #     scale_y_continuous(limits = c(-r, r))
-plot(g2)
+# plot(g2)
+```
+
+```{r area}
+bys <- 10^(0:4)
+x <- sapply(1/bys, circleMatrix)
+    
+```
