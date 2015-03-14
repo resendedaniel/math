@@ -1,0 +1,43 @@
+---
+title: "Circle to Square"
+author: "Daniel Resende"
+date: "March 14, 2015"
+output: html_document
+---
+
+I took many square roots of a semi-circle and it became a half-square.
+Pretty neat.
+
+```{r}
+library(reshape2)
+library(ggplot2)
+
+by <- .01
+x <- seq(-1, 1, by=by)
+
+n <- 2^(0:10)
+
+f <- function(x, r=1) {
+    sqrt((r-x)*(r+x))
+}
+
+nRoot <- function(n, x=seq(-1, 1, by=.01)) {
+    f(x) ^ (1/n)
+}
+
+data <- sapply(n, nRoot)
+colnames(data) <- n
+rownames(data) <- x
+# data <- rbind(data, -data)
+
+data <- melt(data, id="x")
+names(data) <- c("x", "n", "y")
+# data$n <- as.factor(n)
+
+ggplot(data, aes(x, y, color=factor(n))) + geom_line() +
+    ggtitle("Half-circle becoming a half-square as I took many square roots") +
+    guides(color=guide_legend(title="# roots")) +
+    theme_bw() +
+    theme(legend.position="bottom")
+head(data)
+```
