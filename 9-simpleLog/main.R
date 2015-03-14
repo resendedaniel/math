@@ -7,5 +7,5 @@ animateLog <- function(n) {
     })
 }
 par(mfrow=c(2,1))
-n <- 2^(0:20)
+n <- 2^(0:10)
 animateLog(n)
