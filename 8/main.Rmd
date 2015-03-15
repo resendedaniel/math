@@ -4,28 +4,44 @@ library(ggplot2)
 
 cat("\014")  
 
-genseq <- function(by=.1, r=1) {
-    seq(-r, r, by=by)
+genseq <- function(base, r) {
+    seq(-r, r, by=base)
 }
 
 f <- function(x, r=1) {
     sqrt((r-x)*(r+x))
 }
 
-area <- function(x, r=1) {
-    f(x) * r
+cM <- function(base=.1, r=1) {
+    x <- genseq(base, r)
+    y <- f(x, r)
+    
+    matrix(c(x, y), ncol=2, dimnames=list(NULL, c("x", "y")))
 }
 
-circleMatrix <- function(n, r=1) {
-    x <- genseq(n, r)
-    y <- f(x)
+cMArea <- function(cM) {
+    base <- cM[2,1] - cM[1,1]
+    sum(cM[, "y"] * base)
+}
+
+cMPlot <- function(cM) {
+    plot(cM,
+         type="l",
+         frame=F,
+         main=paste("2 x area:", 2*cMArea(cM)),
+         xlab=paste("x | bases=", cM[2,1] - cM[1,1]))
+    abline(h=0)
+    apply(cM, 1, function(coord) {
+        x <- coord[1]
+        y <- coord[2]
+        segments(x, y, y1 = 0)
+    })
     
-    matrix(c(x, y), 2)
 }
 
 ### Data
 r <- 1
-by <- .01
+by <- .0001
 x <- genseq(by, r)
 y <- y0 <- f(x, r)
 t1 <- (r-x)
@@ -47,7 +63,7 @@ df <- melt(df, id="x")
 g1 <- ggplot(df, aes(x, value, color=variable)) + geom_line()
 #     scale_x_continuous(limits = c(-r, r)) +
 #     scale_y_continuous(limits = c(-r, r))
-plot(g1)
+# plot(g1)
 
 diff1 <- y0 - y1
 diff2 <- y0 / y1
@@ -63,7 +79,23 @@ g2 <- ggplot(diff, aes(x, value, color=variable)) + geom_line()
 ```
 
 ```{r area}
-bys <- 10^(0:4)
-x <- sapply(1/bys, circleMatrix)
-    
+speed <- 5
+bases <- c(seq(1, 99, by=1*speed),
+          seq(100, 999, by=10*speed),
+          seq(1000, 9999, by=100*speed))
+l <- sapply(1/bases, cM, r=1)
+names(l) <- bases
+x <- data.frame(bases, area=unlist(lapply(l, cMArea)))
+rownames(x) <- NULL
+
+lapply(l, function(x) {
+    cMPlot(x)
+    Sys.sleep(1/4)
+})
+# bases <- seq(1, 10^3, by=10)
+# sapply(bases, function(n) {
+#     x <- 2 * cMArea(cM(n))
+#     print(x)
+#     x
+# })
 ```

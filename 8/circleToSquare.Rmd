@@ -39,5 +39,4 @@ ggplot(data, aes(x, y, color=factor(n))) + geom_line() +
     guides(color=guide_legend(title="# roots")) +
     theme_bw() +
     theme(legend.position="bottom")
-head(data)
 ```
