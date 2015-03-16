@@ -83,6 +83,7 @@ speed <- 5
 bases <- c(seq(1, 99, by=1*speed),
           seq(100, 999, by=10*speed),
           seq(1000, 9999, by=100*speed))
+# bases <- 1:100
 l <- sapply(1/bases, cM, r=1)
 names(l) <- bases
 x <- data.frame(bases, area=unlist(lapply(l, cMArea)))
@@ -90,7 +91,7 @@ rownames(x) <- NULL
 
 lapply(l, function(x) {
     cMPlot(x)
-    Sys.sleep(1/4)
+    Sys.sleep(1/2)
 })
 # bases <- seq(1, 10^3, by=10)
 # sapply(bases, function(n) {
