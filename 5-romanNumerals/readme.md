@@ -1,6 +1,6 @@
 # Simple plots with Roman Numerals
 
 ##Linear scale: 
-![Linear scale](https://github.com/resendedaniel/math/blob/master/5/img/linear.png)
+![Linear scale](img/linear.png)
 ##Log scale: 
-![Linear scale](https://github.com/resendedaniel/math/blob/master/5/img/log.png)
+![Linear scale](img/log.png)
