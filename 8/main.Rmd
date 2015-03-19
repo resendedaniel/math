@@ -79,7 +79,7 @@ g2 <- ggplot(diff, aes(x, value, color=variable)) + geom_line()
 ```
 
 ```{r area}
-speed <- 5
+speed <- 1
 bases <- c(seq(1, 99, by=1*speed),
           seq(100, 999, by=10*speed),
           seq(1000, 9999, by=100*speed))
