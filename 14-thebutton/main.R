@@ -46,7 +46,7 @@ loadData <- function () {
 
 # data <- loadData()
 sample <- data
-sample <- sample_n(data, 2000)
+# sample <- sample_n(data, 2000)
 sample$d <- as.POSIXct(sample$d)
 sample <- melt(sample, id="d")
 
