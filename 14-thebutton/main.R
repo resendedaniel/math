@@ -55,10 +55,10 @@ g1 <- ggplot(filter(sample, variable == "time"), aes(d, value, fill=variable)) +
     geom_smooth() +
     theme_bw() +
     theme(legend.position = "none")
-ggsave("plot1")
+ggsave("img/plot1.png")
 g2 <- ggplot(filter(sample, variable == "time"), aes(value)) +
     geom_density() +
     theme_bw()
-ggsave("plot2")
+ggsave("img/plot2.png")
 grid.arrange(g1, g2, nrow=2)
 

@@ -1,4 +1,4 @@
 # thebutton
 
-![thebutton](plot1.png)
-![thebutton](plot2.png)
+![thebutton](img/plot1.png)
+![thebutton](img/plot2.png)
