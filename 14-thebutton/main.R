@@ -1,22 +1,22 @@
-tmp_bak <- data
 loadData <- function () {
+    t <- proc.time()
     url <- "http://hookrace.net/thebutton.txt"
+#     data <- ifelse(exists("tmp_bak"), tmp_bak, readLines(url))
     data <- readLines(url)
-    data <- tmp_bak
+    tmp_bak <<- data
+    print(proc.time() -t)
+
     data
 }
 
 ## Getting and cleaning data
 data <- loadData()
-data <- data[1:10]
 data <- strsplit(data, "\t")
 
-data <- data.frame(matrix(unlist(data), length(data), byrow=T))
+data <- matrix(unlist(data), length(data), byrow=T)
+data <- data.frame(data, stringsAsFactors=F)
 names(data) <- c("d", "time")
-data <- sapply(data, as.character)
-data$d <- strptime()
-data 
+data$d <- strptime(data$d, "%Y-%m-%d-%H-%M-%S")
+data$time <- as.numeric(data$time)
 
-
-
-data
+# data <- tmp_bak
