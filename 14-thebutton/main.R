@@ -67,17 +67,20 @@ data <- loadData()
 data$flair <- sapply(data$time, flair)
 data$flair <- factor(data$flair, levels=c("purple", "blue", "green", "yellow", "orange", "red"))
 sample <- data
-# sample <- sample_n(data, 2000)
+sample <- sample_n(data, 2000)
 sample$d <- as.POSIXct(sample$d)
 sample <- melt(sample, id=c("d", "flair"))
 
 g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
     geom_point(aes(color=flair)) +
-    geom_smooth() +
+    geom_smooth(aes(size=1)) +
     theme_bw() +
     theme(legend.position = "none") +
     scale_color_manual(values=c("#820080", "#0083C7", "#02BE01", "#E5D900")) +
-    xlab("") + ylab("click") + ggtitle("Reddit /r/thebutton\nAverage click almost on blue")
+    xlab(paste("updated:", as.POSIXct(as.numeric(Sys.time()), origin='1970-01-01', tz="UTC"))) +
+    ylab("click") + ggtitle("Average button click") +
+    theme(plot.title = element_text(size = 25))
+
 ggsave("img/plot1.png")
 g1
 # g2 <- ggplot(filter(sample, variable == "time"), aes(value)) +
