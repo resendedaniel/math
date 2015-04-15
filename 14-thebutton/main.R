@@ -1,3 +1,4 @@
+setwd("~/workspace/math/14-thebutton")
 library(dplyr)
 library(reshape2)
 library(ggplot2)
@@ -44,21 +45,44 @@ loadData <- function () {
     data
 }
 
-# data <- loadData()
+flair <- function(n) {
+    x <- if (n >= 51) {
+        "purple"
+    } else if (n >= 41) {
+        "blue"
+    } else if (n >= 31) {
+        "green"
+    } else if (n >= 21) {
+        "yellow"
+    } else if (n > 11) {
+        "orange"
+    } else {
+        "red"
+    }
+    
+    x
+}
+
+data <- loadData()
+data$flair <- sapply(data$time, flair)
+data$flair <- factor(data$flair, levels=c("purple", "blue", "green", "yellow", "orange", "red"))
 sample <- data
 # sample <- sample_n(data, 2000)
 sample$d <- as.POSIXct(sample$d)
-sample <- melt(sample, id="d")
+sample <- melt(sample, id=c("d", "flair"))
 
-g1 <- ggplot(filter(sample, variable == "time"), aes(d, value, fill=variable)) +
-    geom_point() +
+g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
+    geom_point(aes(color=flair)) +
     geom_smooth() +
     theme_bw() +
-    theme(legend.position = "none")
+    theme(legend.position = "none") +
+    scale_color_manual(values=c("#820080", "#0083C7", "#02BE01", "#E5D900")) +
+    xlab("") + ylab("click") + ggtitle("Reddit /r/thebutton\nAverage click almost on blue")
 ggsave("img/plot1.png")
-g2 <- ggplot(filter(sample, variable == "time"), aes(value)) +
-    geom_density() +
-    theme_bw()
-ggsave("img/plot2.png")
-grid.arrange(g1, g2, nrow=2)
+g1
+# g2 <- ggplot(filter(sample, variable == "time"), aes(value)) +
+#     geom_density() +
+#     theme_bw()
+# ggsave("img/plot2.png")
+# grid.arrange(g1, g2, nrow=2)
 
