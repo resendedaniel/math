@@ -66,13 +66,14 @@ flair <- function(n) {
     x
 }
 
-data <- loadData()
+originalData <- data <- loadData()
 data$flair <- sapply(data$time, flair)
 data$flair <- factor(data$flair, levels=c("purple", "blue", "green", "yellow", "orange", "red"))
 sample <- data
 # sample <- sample_n(data, 2000)
 sample$d <- as.POSIXct(sample$d)
 sample <- melt(sample, id=c("d", "flair"))
+table <- table(data$time)
 
 g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
     geom_point(aes(color=flair)) +
