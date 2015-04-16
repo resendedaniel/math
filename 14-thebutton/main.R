@@ -78,6 +78,7 @@ g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
     geom_smooth(aes(size=1)) +
     theme_bw() +
     theme(legend.position = "none") +
+    scale_y_reverse() +
     scale_color_manual(values=c("#820080", "#0083C7", "#02BE01", "#E5D900")) +
     xlab(paste("updated:", as.POSIXct(as.numeric(Sys.time()), origin='1970-01-01', tz="UTC"))) +
     ylab("click") + ggtitle("Average button click") +
