@@ -88,7 +88,8 @@ g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
                           tz="UTC"),
                "\n",
                "data source:",
-               dataURL)) +
+               dataURL,
+               "UTC")) +
     ylab("click")
 
 ggsave("img/plot1.png")
