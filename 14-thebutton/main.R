@@ -4,6 +4,8 @@ library(reshape2)
 library(ggplot2)
 library(gridExtra)
 
+t <- proc.time()
+
 cleanData <- function(data) {
     data <- strsplit(data, "\t")
     data <- lapply(data, function(x) {
@@ -67,7 +69,7 @@ data <- loadData()
 data$flair <- sapply(data$time, flair)
 data$flair <- factor(data$flair, levels=c("purple", "blue", "green", "yellow", "orange", "red"))
 sample <- data
-sample <- sample_n(data, 2000)
+# sample <- sample_n(data, 2000)
 sample$d <- as.POSIXct(sample$d)
 sample <- melt(sample, id=c("d", "flair"))
 
@@ -89,3 +91,4 @@ g1
 # ggsave("img/plot2.png")
 # grid.arrange(g1, g2, nrow=2)
 
+print(proc.time() - t)
