@@ -37,7 +37,7 @@ loadData <- function () {
     t <- proc.time()
     file <- "data/thebutton.txt"
     download.file(dataURL, file)
-    data <- readLines(file)
+    data <- readLines(file, n=1000)
     tmp_bak <<- data
     print(proc.time() -t)
 
@@ -86,10 +86,10 @@ g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
                as.POSIXct(as.numeric(Sys.time()),
                           origin='1970-01-01',
                           tz="UTC"),
+               "UTC",
                "\n",
                "data source:",
-               dataURL,
-               "UTC")) +
+               dataURL)) +
     ylab("click")
 
 ggsave("img/plot1.png")
