@@ -80,16 +80,23 @@ g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
     theme(legend.position = "none") +
     scale_y_reverse() +
     scale_color_manual(values=c("#820080", "#0083C7", "#02BE01", "#E5D900")) +
-    xlab(paste("updated:", as.POSIXct(as.numeric(Sys.time()), origin='1970-01-01', tz="UTC"))) +
+    xlab(paste("updated:",
+               as.POSIXct(as.numeric(Sys.time()),
+                          origin='1970-01-01',
+                          tz="UTC"),
+               "\n",
+               "data source:",
+               url)) +
     ylab("click") + ggtitle("Average button click") +
     theme(plot.title = element_text(size = 25))
 
 ggsave("img/plot1.png")
-g1
-# g2 <- ggplot(filter(sample, variable == "time"), aes(value)) +
-#     geom_density() +
-#     theme_bw()
-# ggsave("img/plot2.png")
+print(proc.time() - t)
+# g1
+g2 <- ggplot(filter(sample, variable == "time"), aes(value)) +
+    geom_density() +
+    theme_bw()
+ggsave("img/plot2.png")
 # grid.arrange(g1, g2, nrow=2)
 
 print(proc.time() - t)
