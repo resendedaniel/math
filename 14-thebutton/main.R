@@ -32,11 +32,12 @@ cleanData <- function(data) {
     data
 }
 
+dataURL <- "http://hookrace.net/thebutton.txt"
 loadData <- function () {
     t <- proc.time()
-    url <- "http://hookrace.net/thebutton.txt"
-#     data <- ifelse(exists("tmp_bak"), tmp_bak, readLines(url))
-    data <- readLines(url)
+    file <- "data/thebutton.txt"
+    download.file(dataURL, file)
+    data <- readLines(file)
     tmp_bak <<- data
     print(proc.time() -t)
 
@@ -86,9 +87,8 @@ g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
                           tz="UTC"),
                "\n",
                "data source:",
-               url)) +
-    ylab("click") + ggtitle("Average button click") +
-    theme(plot.title = element_text(size = 25))
+               dataURL)) +
+    ylab("click")
 
 ggsave("img/plot1.png")
 print(proc.time() - t)
