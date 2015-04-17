@@ -2,7 +2,11 @@ transitionPlot <- function(seq) {
     count <- 101
     for(n in seq) {
         x <- 1:201 / n
-        y <- sin(x)
+#         y <- sin(x)^2/sqrt(cos(x/3))
+#         y <- (sin(x)^2)/sqrt(cos(log(x)/3))
+#         y <- sin(2*x)/sqrt(sin(sin(x))^2)
+#         y <- log(sin(2*x * (1/x))/sqrt(sin(sin(x))^2))
+        y <- log(sin(2*x * (1/n))/sqrt(sin(sin(x))^2))
         
         data <- data.frame(x, y)
 #         png()
