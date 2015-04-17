@@ -37,7 +37,8 @@ loadData <- function () {
     t <- proc.time()
     file <- "data/thebutton.txt"
     download.file(dataURL, file)
-    data <- readLines(file, n=1000)
+#     data <- readLines(file, n=1000)
+    data <- readLines(file)
     tmp_bak <<- data
     print(proc.time() -t)
 
