@@ -25,6 +25,8 @@ cleanData <- function(data) {
     names(data) <- c("d", "clicks", "time")
     
     data$d <- strptime(data$d, "%Y-%m-%d-%H-%M-%S")
+    data$date <- as.factor(format(data$d, "%Y-%m-%d"))
+    data$hour <- as.factor(as.numeric(format(data$d, "%H")))
     data$clicks <- sub(",", "", data$clicks)
     data$clicks <- as.numeric(data$clicks)
     data$time <- as.numeric(data$time)
@@ -70,19 +72,38 @@ flair <- function(n) {
 originalData <- data <- loadData()
 data$flair <- sapply(data$time, flair)
 data$flair <- factor(data$flair, levels=c("purple", "blue", "green", "yellow", "orange", "red"))
-sample <- data
-# sample <- sample_n(data, 2000)
-sample$d <- as.POSIXct(sample$d)
-sample <- melt(sample, id=c("d", "flair"))
+data <- data
+# data <- data_n(data, 2000)
+data$d <- as.POSIXct(data$d)
+
+g3 <- ggplot(data, aes(date, time)) +
+    geom_jitter(aes(color=flair)) +
+    geom_violin() +
+    scale_y_reverse() + 
+    scale_color_manual(values=c("#A13F9F", "#0083C7", "#02BE01", "#E5D900", "#E59500")) +
+    theme_bw() +
+    theme(legend.position = "none") +
+    xlab(paste("updated:",
+               as.POSIXct(as.numeric(Sys.time()),
+                          origin='1970-01-01',
+                          tz="UTC"),
+               "UTC",
+               "\n",
+               "data source:",
+               dataURL)) +
+    ylab("seconds left")
+ggsave("img/plot3.png", scale=2)
+
+# data <- melt(data, id=c("d", "flair", "hour", "date"))
 table <- table(data$time)
 
-g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
+g1 <- ggplot(filter(data, variable == "time"), aes(d, value)) +
     geom_point(aes(color=flair)) +
     geom_smooth(aes(size=1)) +
     theme_bw() +
     theme(legend.position = "none") +
     scale_y_reverse() +
-    scale_color_manual(values=c("#820080", "#0083C7", "#02BE01", "#E5D900")) +
+    scale_color_manual(values=c("#A13F9F", "#0083C7", "#02BE01", "#E5D900", "#E59500")) +
     xlab(paste("updated:",
                as.POSIXct(as.numeric(Sys.time()),
                           origin='1970-01-01',
@@ -95,11 +116,12 @@ g1 <- ggplot(filter(sample, variable == "time"), aes(d, value)) +
 
 ggsave("img/plot1.png")
 print(proc.time() - t)
-# g1
-g2 <- ggplot(filter(sample, variable == "time"), aes(value)) +
-    geom_density() +
-    theme_bw()
-ggsave("img/plot2.png")
-# grid.arrange(g1, g2, nrow=2)
+
+# g2 <- ggplot(filter(data, variable == "time"), aes(value)) +
+#     geom_density() +
+#     theme_bw()
+# ggsave("img/plot2.png")
+
+# # grid.arrange(g1, g2, nrow=2)
 
 print(proc.time() - t)
