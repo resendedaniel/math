@@ -85,7 +85,7 @@ g3 <- ggplot(data, aes(date, time)) +
                "data source:",
                dataURL)) +
     ylab("seconds left")
-ggsave("img/plot3.png", width=240, height=160, units="mm")
+ggsave("img/plot3.png", width=320, height=240, units="mm")
 
 # data <- melt(data, id=c("d", "flair", "hour", "date"))
 table <- table(data$time)
@@ -106,6 +106,6 @@ g1 <- ggplot(data, aes(d, time)) +
                "data source:",
                dataURL)) +
     ylab("click")
-ggsave("img/plot1.png", width=240, height=160, units="mm")
+ggsave("img/plot1.png", width=320, height=240, units="mm")
 
-# print(proc.time() - t)
+print(proc.time() - t)
