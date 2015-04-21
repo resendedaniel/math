@@ -13,9 +13,8 @@ traffic_url <- "http://www.reddit.com/r/thebutton/about/traffic"
 tables <- readHTMLTable(html)
 
 ## Daily  Visitors Table
-dailyDF <- tables[["traffic-day"]]
+### Getting and Cleanning
 dailyDF$date <- as.Date(dailyDF$date, "%m/%d/%y")
-
 dailyDF[2:4] <- sapply(dailyDF[2:4], function(x) {
     x <- as.character(x)
     x <- gsub(",", "", x)
@@ -23,30 +22,29 @@ dailyDF[2:4] <- sapply(dailyDF[2:4], function(x) {
     x
 })
 dailyDF <- filter(dailyDF, date >= "2015-04-01")
-dailyDF <- filter(dailyDF, date != today())
-ggplot(melt(dailyDF, id="date"), aes(date, value, color=variable)) +
+dailyDF <- filter(dailyDF, date <= "2015-04-20")
+
+### Normalizing
+zdailyDF <- dailyDF
+n <- nrow(zdailyDF)
+zdailyDF$date <- (n-1):0
+zdailyDF[2:4] <- sapply(zdailyDF[2:4], function(x) {
+    (x - mean(x)) / sd(x)
+})
+
+### Plot
+ggplot(melt(zdailyDF, id="date"), aes(date, value, color=variable)) +
     geom_line() +
     geom_smooth(method="lm", linetype="dashed") +
     facet_grid(variable~., scales="free") +
     theme_bw() +
     theme(legend.position="bottom")
 
-
 ## Regression
-fit <- lm(subscriptions ~ uniques + pageviews, dailyDF)
-summary(fit)
-
-# print(content(r, as="raw"))
-# cat(paste("\n", "I have printed the response of", traffic_url, ", as raw", "\n"))
-# Sys.sleep(delay)
-# 
-# print(content(r, as="text"))
-# cat("\n", "Now as text, it's more redable for humans", "\n")
-# Sys.sleep(delay)
-# 
-# print(content(r, as="parsed"))
-# cat("\n", "Parsed is in a format more prone to r read the data. I don't know exactly the difference, but I'll try to get it.")
-# 
-# names(r)
+# I don't know why fit and zfit aren't the same. Need help.
+fit <- lm(subscriptions ~ uniques + pageviews, dailyDF -1)
+zfit <- lm(subscriptions ~ uniques + pageviews, zdailyDF -1)
+print(summary(fit))
+print(summary(zfit))
 
 print(proc.time() - t)
