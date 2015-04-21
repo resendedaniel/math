@@ -103,7 +103,7 @@ g1 <- ggplot(filter(data, variable == "time"), aes(d, value)) +
     theme_bw() +
     theme(legend.position = "none") +
     scale_y_reverse() +
-    scale_color_manual(values=c("#A13F9F", "#0083C7", "#02BE01", "#E5D900", "#E59500")) +
+    scale_color_manual(values=c("#A13F9F", "#0083C7", "#02BE01", "#E5D900", "#E59500", "#E50000")) +
     xlab(paste("updated:",
                as.POSIXct(as.numeric(Sys.time()),
                           origin='1970-01-01',
