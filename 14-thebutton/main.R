@@ -30,23 +30,21 @@ cleanData <- function(data) {
     data$clicks <- sub(",", "", data$clicks)
     data$clicks <- as.numeric(data$clicks)
     data$time <- as.numeric(data$time)
+    data$flair <- sapply(data$time, flair)
+    data$flair <- factor(data$flair, levels=c("purple", "blue", "green", "yellow", "orange", "red"))
+    data$d <- as.POSIXct(data$d)
     
     data
 }
 
 dataURL <- "http://hookrace.net/thebutton.txt"
 loadData <- function () {
-    t <- proc.time()
     file <- "data/thebutton.txt"
     download.file(dataURL, file)
 #     data <- readLines(file, n=1000)
     data <- readLines(file)
     tmp_bak <<- data
-    print(proc.time() -t)
-
-    t <- proc.time()
     data <- cleanData(data)
-    print(proc.time() -t)
 
     data
 }
@@ -70,15 +68,10 @@ flair <- function(n) {
 }
 
 originalData <- data <- loadData()
-data$flair <- sapply(data$time, flair)
-data$flair <- factor(data$flair, levels=c("purple", "blue", "green", "yellow", "orange", "red"))
-data <- data
-# data <- data_n(data, 2000)
-data$d <- as.POSIXct(data$d)
 
 g3 <- ggplot(data, aes(date, time)) +
-    geom_jitter(aes(color=flair)) +
-    geom_violin() +
+    geom_jitter(aes(color=flair, alpha=.01)) +
+    geom_violin(adjust=3) +
     scale_y_reverse() + 
     scale_color_manual(values=c("#A13F9F", "#0083C7", "#02BE01", "#E5D900", "#E59500")) +
     theme_bw() +
@@ -92,14 +85,14 @@ g3 <- ggplot(data, aes(date, time)) +
                "data source:",
                dataURL)) +
     ylab("seconds left")
-ggsave("img/plot3.png", scale=2)
+ggsave("img/plot3.png", width=240, height=160, units="mm")
 
 # data <- melt(data, id=c("d", "flair", "hour", "date"))
 table <- table(data$time)
 
-g1 <- ggplot(filter(data, variable == "time"), aes(d, value)) +
+g1 <- ggplot(data, aes(d, time)) +
     geom_point(aes(color=flair)) +
-    geom_smooth(aes(size=1)) +
+    geom_smooth(aes(size=1), se=FALSE) +
     theme_bw() +
     theme(legend.position = "none") +
     scale_y_reverse() +
@@ -113,15 +106,6 @@ g1 <- ggplot(filter(data, variable == "time"), aes(d, value)) +
                "data source:",
                dataURL)) +
     ylab("click")
+ggsave("img/plot1.png", width=240, height=160, units="mm")
 
-ggsave("img/plot1.png")
-print(proc.time() - t)
-
-# g2 <- ggplot(filter(data, variable == "time"), aes(value)) +
-#     geom_density() +
-#     theme_bw()
-# ggsave("img/plot2.png")
-
-# # grid.arrange(g1, g2, nrow=2)
-
-print(proc.time() - t)
+# print(proc.time() - t)

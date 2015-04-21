@@ -7,13 +7,32 @@ t <- proc.time()
 
 delay <- 0
 traffic_url <- "http://www.reddit.com/r/thebutton/about/traffic"
-# r <- GET(trafficURL)
+# r <- GET(traffic_url)
 # html <- htmlTreeParse(content(r, "text"), asText=TRUE)
-# html <- htmlTreeParse(trafficURL, useInternal = TRUE)
+html <- htmlTreeParse(traffic_url, useInternal = TRUE)
 tables <- readHTMLTable(html)
+
+## Click data
+clicks <- loadData()
+clicksByDate <- split(clicks, clicks$date)
+date <- as.Date(names(clicksByDate))
+mean <- unlist(lapply(clicksByDate, function(x) {
+    mean(x$time)
+}))
+sd <- unlist(lapply(clicksByDate, function(x) {
+    sd(x$time)
+}))
+numClicks <- unlist(lapply(clicksByDate, function(x) {
+    length(x$time)
+}))
+min <- unlist(lapply(clicksByDate, function(x) {
+    min(x$time)
+}))
+
 
 ## Daily  Visitors Table
 ### Getting and Cleanning
+dailyDF <- tables[["traffic-day"]]
 dailyDF$date <- as.Date(dailyDF$date, "%m/%d/%y")
 dailyDF[2:4] <- sapply(dailyDF[2:4], function(x) {
     x <- as.character(x)
@@ -22,14 +41,15 @@ dailyDF[2:4] <- sapply(dailyDF[2:4], function(x) {
     x
 })
 dailyDF <- filter(dailyDF, date >= "2015-04-01")
-dailyDF <- filter(dailyDF, date <= "2015-04-20")
+dailyDF <- filter(dailyDF, subscriptions > 0)
+dailyDF <- mutate(dailyDF, subscriptionsRate = subscriptions / uniques)
 
 ### Normalizing
 zdailyDF <- dailyDF
 n <- nrow(zdailyDF)
 zdailyDF$date <- (n-1):0
 zdailyDF[2:4] <- sapply(zdailyDF[2:4], function(x) {
-    (x - mean(x)) / sd(x)
+    (x - mean(x)) #/ sd(x)
 })
 
 ### Plot
@@ -41,10 +61,17 @@ ggplot(melt(zdailyDF, id="date"), aes(date, value, color=variable)) +
     theme(legend.position="bottom")
 
 ## Regression
-# I don't know why fit and zfit aren't the same. Need help.
-fit <- lm(subscriptions ~ uniques + pageviews, dailyDF -1)
-zfit <- lm(subscriptions ~ uniques + pageviews, zdailyDF -1)
+fit <- lm(subscriptions ~ date, dailyDF)
+zfit <- lm(subscriptions ~ date, zdailyDF)
 print(summary(fit))
 print(summary(zfit))
+
+par(mfrow=c(3,1))
+plot(dailyDF$date, dailyDF$subscriptions, pch=20, main="scatter log", log="y")
+abline(fit)
+plot(dailyDF$date, dailyDF$subscriptions, pch=20, main="scatter no log")
+abline(fit)
+plot(dailyDF$date, fit$residuals, pch=20, main="residuals")
+abline(h=0)
 
 print(proc.time() - t)
