@@ -3,6 +3,7 @@ library(dplyr)
 library(reshape2)
 library(ggplot2)
 library(gridExtra)
+library(beepr)
 
 t <- proc.time()
 
@@ -85,7 +86,7 @@ g3 <- ggplot(data, aes(date, time)) +
                "data source:",
                dataURL)) +
     ylab("seconds left")
-ggsave("img/plot3.png", width=5, height=3, scale=3)
+ggsave("img/plot3.png", width=16, height=10)
 
 # data <- melt(data, id=c("d", "flair", "hour", "date"))
 table <- table(data$time)
@@ -109,3 +110,4 @@ g1 <- ggplot(data, aes(d, time)) +
 ggsave("img/plot1.png", width=320, height=240, units="mm")
 
 print(proc.time() - t)
+beep(4)
