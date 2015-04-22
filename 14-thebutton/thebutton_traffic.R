@@ -7,8 +7,8 @@ t <- proc.time()
 
 delay <- 0
 traffic_url <- "http://www.reddit.com/r/thebutton/about/traffic"
-# r <- GET(traffic_url)
-# html <- htmlTreeParse(content(r, "text"), asText=TRUE)
+r <- GET(traffic_url)
+html <- htmlTreeParse(content(r, "text"), asText=TRUE)
 html <- htmlTreeParse(traffic_url, useInternal = TRUE)
 tables <- readHTMLTable(html)
 
