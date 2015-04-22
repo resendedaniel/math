@@ -85,7 +85,7 @@ g3 <- ggplot(data, aes(date, time)) +
                "data source:",
                dataURL)) +
     ylab("seconds left")
-ggsave("img/plot3.png", width=320, height=240, units="mm")
+ggsave("img/plot3.png", width=5, height=3, scale=3)
 
 # data <- melt(data, id=c("d", "flair", "hour", "date"))
 table <- table(data$time)
