@@ -4,6 +4,8 @@ library(reshape2)
 library(ggplot2)
 library(gridExtra)
 library(beepr)
+library(scales)
+library(lubridate)
 
 t <- proc.time()
 
@@ -90,8 +92,8 @@ ggsave("img/plot3.png", width=16, height=10, dpi=150)
 table <- table(data$time)
 
 g1 <- ggplot(data, aes(d, time)) +
-    geom_point(size=1.5, aes(color=flair)) +
-    geom_smooth(aes(size=1), se=FALSE) +
+    geom_point(size=1, aes(color=flair)) +
+#     geom_smooth() +
     theme_bw() +
     theme(legend.position = "none") +
     scale_y_reverse() +
@@ -106,6 +108,11 @@ g1 <- ggplot(data, aes(d, time)) +
                dataURL)) +
     ylab("click")
 ggsave("img/plot1.png", width=16, height=10, dpi=150)
+
+g2 <- g1 + 
+    facet_wrap(~date, scales="free_x") +
+    scale_x_datetime(labels = date_format("%H:%M"),breaks = "6 hour")
+ggsave("img/plot2.png", width=16, height=10, dpi=150)
 
 print(proc.time() - t)
 beep(4)
