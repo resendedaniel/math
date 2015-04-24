@@ -28,6 +28,7 @@ numClicks <- unlist(lapply(clicksByDate, function(x) {
 min <- unlist(lapply(clicksByDate, function(x) {
     min(x$time)
 }))
+clicksByDate <- data.frame(date, mean, sd, numClicks, min)
 
 
 ## Daily  Visitors Table
@@ -43,6 +44,9 @@ dailyDF[2:4] <- sapply(dailyDF[2:4], function(x) {
 dailyDF <- filter(dailyDF, date >= "2015-04-01")
 dailyDF <- filter(dailyDF, subscriptions > 0)
 dailyDF <- mutate(dailyDF, subscriptionsRate = subscriptions / uniques)
+
+### Merging
+data <- merge(clicksByDate, dailyDF)
 
 ### Normalizing
 zdailyDF <- dailyDF
