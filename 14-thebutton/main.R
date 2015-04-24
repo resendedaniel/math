@@ -74,7 +74,7 @@ g3 <- ggplot(data, aes(date, time)) +
     geom_jitter(size=1.5, aes(color=flair, alpha=.01)) +
     geom_violin(adjust=3) +
     scale_y_reverse() + 
-    scale_color_manual(values=c("#A13F9F", "#0083C7", "#02BE01", "#E5D900", "#E59500")) +
+    scale_color_manual(values=c("#A13F9F", "#0083C7", "#02BE01", "#E5D900", "#E59500", "#E50000")) +
     theme_bw() +
     theme(legend.position = "none") +
     xlab(paste("updated:",
@@ -92,7 +92,7 @@ ggsave("img/plot3.png", width=16, height=10, dpi=150)
 table <- table(data$time)
 
 g1 <- ggplot(data, aes(d, time)) +
-    geom_point(size=1, aes(color=flair)) +
+    geom_point(size=1.5, aes(color=flair)) +
 #     geom_smooth() +
     theme_bw() +
     theme(legend.position = "none") +
