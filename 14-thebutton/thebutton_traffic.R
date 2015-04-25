@@ -47,35 +47,35 @@ dailyDF <- mutate(dailyDF, subscriptionsRate = subscriptions / uniques)
 
 ### Merging
 data <- merge(clicksByDate, dailyDF)
-
-### Normalizing
-zdailyDF <- dailyDF
-n <- nrow(zdailyDF)
-zdailyDF$date <- (n-1):0
-zdailyDF[2:4] <- sapply(zdailyDF[2:4], function(x) {
-    (x - mean(x)) #/ sd(x)
-})
-
-### Plot
-ggplot(melt(zdailyDF, id="date"), aes(date, value, color=variable)) +
-    geom_line() +
-    geom_smooth(method="lm", linetype="dashed") +
-    facet_grid(variable~., scales="free") +
-    theme_bw() +
-    theme(legend.position="bottom")
-
-## Regression
-fit <- lm(subscriptions ~ date, dailyDF)
-zfit <- lm(subscriptions ~ date, zdailyDF)
-print(summary(fit))
-print(summary(zfit))
-
-par(mfrow=c(3,1))
-plot(dailyDF$date, dailyDF$subscriptions, pch=20, main="scatter log", log="y")
-abline(fit)
-plot(dailyDF$date, dailyDF$subscriptions, pch=20, main="scatter no log")
-abline(fit)
-plot(dailyDF$date, fit$residuals, pch=20, main="residuals")
-abline(h=0)
-
-print(proc.time() - t)
+# 
+# ### Normalizing
+# zdailyDF <- dailyDF
+# n <- nrow(zdailyDF)
+# zdailyDF$date <- (n-1):0
+# zdailyDF[2:4] <- sapply(zdailyDF[2:4], function(x) {
+#     (x - mean(x)) #/ sd(x)
+# })
+# 
+# ### Plot
+# ggplot(melt(zdailyDF, id="date"), aes(date, value, color=variable)) +
+#     geom_line() +
+#     geom_smooth(method="lm", linetype="dashed") +
+#     facet_grid(variable~., scales="free") +
+#     theme_bw() +
+#     theme(legend.position="bottom")
+# 
+# ## Regression
+# fit <- lm(subscriptions ~ date, dailyDF)
+# zfit <- lm(subscriptions ~ date, zdailyDF)
+# print(summary(fit))
+# print(summary(zfit))
+# 
+# par(mfrow=c(3,1))
+# plot(dailyDF$date, dailyDF$subscriptions, pch=20, main="scatter log", log="y")
+# abline(fit)
+# plot(dailyDF$date, dailyDF$subscriptions, pch=20, main="scatter no log")
+# abline(fit)
+# plot(dailyDF$date, fit$residuals, pch=20, main="residuals")
+# abline(h=0)
+# 
+# print(proc.time() - t)
