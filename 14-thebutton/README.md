@@ -2,6 +2,8 @@
 
 ## All clicks by day and its distribution
 ![thebutton](img/plot3.png)
+![thebutton](img/plot2.png)
+
 
 ## Average button click
 ![thebutton](img/plot1.png)
