@@ -1,6 +1,6 @@
 library(beepr)
 source('~/workspace/math/constants.R')
-cleanSeq <- function(time, ceil=.2, floor=.1) {
+cleanSeq <- function(time, ceil=.4, floor=.2) {
 #     seq <- seq[seq<20 & seq >0]
     seq <- seq - min(seq)
     seq <- seq + floor
@@ -12,7 +12,7 @@ cleanSeq <- function(time, ceil=.2, floor=.1) {
 n <- 2^7
 seq <- (seq(0, 4*tau, length.out=n))
 # seq <- log(abs(sin(seq)/cos(seq)^2))
-seq <- sin(seq) + 2*sin(seq/2) + sin(seq/3) + 8*sin(seq/8)
+seq <- -(sin(seq) + 4*sin(seq/16))
 seq <- cleanSeq(seq)
 
 
