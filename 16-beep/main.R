@@ -1,38 +1,29 @@
 library(beepr)
-tau <- 2 * pi
-sapply(1:4, function(x) {
+source('~/workspace/math/constants.R')
+cleanSeq <- function(time, ceil=.2, floor=.1) {
+#     seq <- seq[seq<20 & seq >0]
+    seq <- seq - min(seq)
+    seq <- seq + floor
+    seq <- seq/max(seq) * ceil
+    print(seq)
+    seq
+}
+
+n <- 2^7
+seq <- (seq(0, 4*tau, length.out=n))
+# seq <- log(abs(sin(seq)/cos(seq)^2))
+seq <- sin(seq) + 2*sin(seq/2) + sin(seq/3) + 8*sin(seq/8)
+seq <- cleanSeq(seq)
+
+
+plot(seq,
+     type="n",
+#      frame=F,
+     axes=FALSE,
+     xaxt='n',
+     ann=FALSE)
+for(i in seq_along(seq)) {
+    points(i, seq[i], pch=20, col="#6F8242")
     beep()
-    Sys.sleep(1/12)
-})
-Sys.sleep(4/12)
-sapply(1:8, function(x) {
-    beep()
-    Sys.sleep(1/24)
-})
-Sys.sleep(4/12)
-sapply(1:4, function(x) {
-    beep()
-    Sys.sleep(1/12)
-})
-Sys.sleep(4/12)
-sapply(1:8, function(x) {
-    beep()
-    Sys.sleep(1/24)
-})
-Sys.sleep(4/12)
-sapply(1:4, function(x) {
-    beep()
-    Sys.sleep(1/12)
-})
-Sys.sleep(4/12)
-sapply(1:8, function(x) {
-    beep()
-    Sys.sleep(1/24)
-})
-Sys.sleep(4/12)
-seq <- (sin(seq(-2*tau, 2*tau, length.out=64)) + 1)/4
-# plot(seq, pch=20)
-sapply(seq/2, function(n) {
-    beep()
-    Sys.sleep(n)
-})
+    Sys.sleep(seq[i])
+}
