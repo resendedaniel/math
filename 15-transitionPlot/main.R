@@ -1,3 +1,5 @@
+source('~/workspace/math/constants.R')
+
 transitionPlot <- function(seq) {
     count <- 101
     for(n in seq) {
@@ -27,4 +29,4 @@ seq <- seq(-tau, tau, length.out=501)
 seq <- seq ^ 2
 seq <- seq[seq != 0]
 print(seq)
-transitionPlot(seq)
+# transitionPlot(seq)
