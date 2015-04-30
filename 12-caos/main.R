@@ -2,6 +2,10 @@
 ## ffmpeg -f image2 -i caos-%d.png ../video/video.avi
 ## ffmpeg -i video.avi -pix_fmt rgb24 out.gif
 
+caosAlg <- function(x) {
+    r * x * (1 - x)
+}
+
 caos <- function(r) {
         r <<- r
         x <- numeric(100)
@@ -14,9 +18,7 @@ caos <- function(r) {
         x
 }
 
-caosAlg <- function(x) {
-        r * x * (1 - x)
-}
+
 
 n <- 100
 r <- seq(from=2.5, to=4, length.out=n)
