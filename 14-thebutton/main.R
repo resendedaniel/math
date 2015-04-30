@@ -110,7 +110,7 @@ g1 <- ggplot(data, aes(d, time)) +
 ggsave("img/plot1.png", width=16, height=10, dpi=150)
 
 g2 <- g1 + 
-    facet_wrap(~date, scales="free_x") +
+    facet_wrap(~date, scales="free_x", ncol=7) +
     scale_x_datetime(labels = date_format("%H:%M"),breaks = "6 hour")
 ggsave("img/plot2.png", width=16, height=10, dpi=150)
 
