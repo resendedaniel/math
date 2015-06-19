@@ -8,6 +8,7 @@ output: html_document
 ```{r libraries, echo=FALSE}
 library(reshape2)
 library(ggplot2)
+library(scales)
 ```
 
 ### Introduction (from Wiki)
@@ -31,7 +32,7 @@ m <- sapply(n , function(n) { # sapply is just a for()
     x <- if(pmf=="normal") {
             rnorm(nosim * n, sd=sd)
         } else if(pmf=="uniform") {
-            runif(nosim * n)
+            sample(1:6, nosim * n, replace=T)
         } else if(pmf=="binomial") {
             sample(0:1, nosim * n, replace=TRUE, prob=c(p, 1-p))
         }
@@ -39,12 +40,15 @@ m <- sapply(n , function(n) { # sapply is just a for()
     apply(matrix(x, nosim), 1, mean)
 })
 colnames(m) <- n # n is my main variable, I have to attach it as data label
+bins <- unlist(lapply(apply(m, 2, unique), length))
 
 # melt is a function from reshape2 package. It will get the matrix or data.frame column names and put them in a collumn repeated several times linked to its correspondent value.
 # I can put the parameters and variables in the same line as my simulation values and one simulation per unique parameter combination. It's easier to subset them.
 # It's called tidy data. It's wonderful. It's a very good standard to handle with Big Data.
 x <- melt(m)
 names(x) <- c("simulation", "sampleSize", "mean")
+x$simulation <- factor(x$simulation)
+x$sampleSize <- factor(x$sampleSize)
 
 print(t - proc.time())
 ```
@@ -52,12 +56,15 @@ print(t - proc.time())
 ### Results
 The first chart shows the distributions. More events falls on the long tail. As we increase the sample size, the values will concentrate more around the mean and it will generate thiner tails.
 ```{r results, fig.width=16, fig.height=10}
-g <- ggplot(x, aes(mean, fill=as.factor(sampleSize))) + # Metadata
-     geom_histogram(aes(y = ..density..)) + # Histogram bars
+g <- ggplot(x, aes(mean, y=..density.., colour=sampleSize, fill=sampleSize)) +
+#      geom_bar(binwidth=.01) +
      geom_density() + # Density lines
      facet_wrap(~sampleSize) + # Broke in a matrix of chart
-     ggtitle("Central Limit Theorem of a uniform distribution\nTested with different sample sizes") +
-     theme(legend.title=element_blank())
+     scale_y_continuous(labels=function(x) paste0(format(round(x), nsmall=0), "%")) +
+#      ggtitle("Central Limit Theorem of a uniform distribution\nTested with different sample sizes") +
+     theme_bw() +
+     theme(legend.title=element_blank()) +
+     theme(legend.position="none")
     
 suppressMessages(print(g))
 ```
