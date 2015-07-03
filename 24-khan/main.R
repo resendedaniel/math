@@ -34,7 +34,7 @@ data <- mutate(data, total_exercises = cumsum(exercises)) %>%
 data <- melt(data, id="dates")
 
 g1 <- ggplot(filter(data, variable %in% c("total_exercises", "total_videos")), aes(dates, value, fill=variable)) + 
-    geom_area(alpha=.5) +
+    geom_area(alpha=.75) +
     xlab("") +
     ylab("minutos") +
     theme(legend.position="none")

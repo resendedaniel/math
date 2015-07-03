@@ -8,11 +8,12 @@ library(gridExtra)
 library(reshape2)
 
 path <- "~/Pictures/ushuaia/stunning_landscape"
+path <- "~/Pictures/ushuaia/stunning_personal"
 files_img <- list.files(path, full.names=TRUE)
 files_img <- files_img[-length(files_img)]
 
 sapply(files_img, function(file) {
-    filter <- "extrude"
+    filter <- "pixel_sort"
     filtered_img <- apply_filter(filter,
                                  read_img(file))
     
@@ -21,29 +22,8 @@ sapply(files_img, function(file) {
     
     beep()
 })
+
+# img <- read_img(files_img[13])
+# img <- pixel_sort(img)
+# save_img(img, "~/Desktop/test.jpg")
 system(paste0("say 'images done'"))
-
-img <- read_img(files_img[1])
-    
-### 3
-# img$blue <- sqrt(img$blue)
-# save_img(img, 3)
-
-### 4
-# img$red <- sqrt(img$red)
-# save_img(img, 4)
-
-### 5
-# img$green <- sqrt(img$green)
-# save_img(img, 5)
-
-### 6
-# m <- matrix(unlist(img), ncol=3)
-# valid <- apply(m, 1, which.max) == 2
-# m <- apply(m, 2, function(x) {
-#     x[valid] <- 1
-#     x
-# })
-
-# dim(m) <- dim
-# save_img(m, 6)
