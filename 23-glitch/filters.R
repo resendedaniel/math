@@ -1,4 +1,4 @@
-invert_color <- function(img, color="red") {
+invert_color <- function(img, color="green") {
     img[[color]] <- apply(img[[color]], 2, rev)
     img
 }
@@ -13,7 +13,7 @@ random_sidewalk <- function(img) {
 }
 
 extrude <- function(img, direction="horizontal") {
-    block <- .20
+    block <- .1 + runif(1)*.8
     position <- runif(1)
     
     img <- lapply(img, function(x) {
@@ -30,10 +30,11 @@ single_col <- function(img, direction="horizontal") {
     img <- lapply(img, function(x) {
         col <- floor(dim(x)[1] * position)
         n <- dim(x)[1]
-        cat(col, n, "\n")
         
         matrix(rep(x[,col], n), ncol=n)
     })
+    
+    img
 }
 
 noise_on_standard_deviation <- function(img, threshold=.925) {
@@ -53,16 +54,14 @@ noise_on_standard_deviation <- function(img, threshold=.925) {
          sd=sd)
 }
 
-pixel_sort_color <- function(img, color="red") {
-    color <- "red"
+pixel_sort_color <- function(img, color="green") {
     base <- img[[color]]
+    other <- img[!names(img) %in% color]
     n <- dim(base)[2]
     for(i in 1:n) {
-        if(i %% round(n/100) == 0) {
-            cat(paste0(round(i / n * 100), "% "))
-        }
-        ind <- rev(order(base[,i]))
-        #         ind <- rev(order(sd(c(img$red[,i], img$green[,i], img$blue[,i]))))
+        if(i %% round(n/100) == 0) { cat(paste0(round(i / n * 100), "% ")) }
+        
+        ind <- rev(order(base[,i] - max(c(other[[1]][,i], other[[2]][,i]))))
         img <- lapply(img, function(x) {
             curr <- x[,i]
             x[,i] <- curr[ind]
