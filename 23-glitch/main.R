@@ -1,4 +1,4 @@
-package_list <- c('beepr', 'jpeg', 'ggplot2', 'gridExtra', 'reshape2')
+package_list <- c('jpeg', 'ggplot2', 'gridExtra', 'reshape2')
 for(p in package_list) {
     if(!(p %in% rownames(installed.packages()))) install.packages(p, repos='http://cran.rstudio.com', lib='/usr/local/lib/R/site-library/')
     library(p, character.only = TRUE)
@@ -6,7 +6,6 @@ for(p in package_list) {
 
 source('api.R')
 source('filters.R')
-library(beepr)
 library(jpeg)
 library(ggplot2)
 library(gridExtra)
@@ -32,8 +31,6 @@ abysm <- sapply(files, function(file) {
     img <- apply_filter(filter, read_img(file))
     destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/", filter, "-"), file)
     save_img(img, destfile)
-    
-    beep()
 })
 system(paste0("say 'images done.'"))
 
