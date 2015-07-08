@@ -1,3 +1,9 @@
+package_list <- c('beepr', 'jpeg', 'ggplot2', 'gridExtra', 'reshape2')
+for(p in package_list) {
+    if(!(p %in% rownames(installed.packages()))) install.packages(p, repos='http://cran.rstudio.com', lib='/usr/local/lib/R/site-library/')
+    library(p, character.only = TRUE)
+}
+
 source('api.R')
 source('filters.R')
 library(beepr)
@@ -8,13 +14,12 @@ library(reshape2)
 
 # path <- "~/Pictures/ushuaia/stunning_landscape"
 # path <- "~/Pictures/ushuaia/stunning_personal"
-path <- "../cityporn"
+path <- "~/img/zeca"
 files <- list.files(path)
 files <- paste(path, files, sep="/")
 files <- files[!grepl("treated", files)]
 
-# sapply(files[c(30, 28, 22, 18, 14, 10, 1:3)], function(file) {
-abysm <- sapply(files[13:24], function(file) {
+abysm <- sapply(files, function(file) {
     filter <- c("invert_color",
                 "random_sidewalk",
                 "extrude",
