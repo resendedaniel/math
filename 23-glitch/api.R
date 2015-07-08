@@ -16,9 +16,9 @@ save_img <- function(img, destfile) {
     writeJPEG(out, destfile)
 }
 
-apply_filter <- function(filter, img, color=NULL) {
+apply_filter <- function(filter, img) {
     # Apply filter on each image    
-    do.call(filter, list(img, color))
+    do.call(filter, list(img))
 }
 
 plot_channels <- function(img) {
