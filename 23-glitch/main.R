@@ -1,6 +1,6 @@
 package_list <- c('jpeg', 'ggplot2', 'gridExtra', 'reshape2')
 for(p in package_list) {
-    if(!(p %in% rownames(installed.packages()))) install.packages(p, repos='http://cran.rstudio.com', lib='/usr/local/lib/R/site-library/')
+    if(!(p %in% rownames(installed.packages()))) install.packages(p, repos='http://cran.rstudio.com', lib='/usr/local/lib/R/site-library/', dependencies=TRUE)
     library(p, character.only = TRUE)
 }
 
