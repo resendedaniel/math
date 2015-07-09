@@ -38,7 +38,7 @@ abysm <- sapply(files[-c(1:14)], function(file) {
     cat("\n", file, "\n", "size: ", paste0(size, "mb"), "\n\n")
     print(proc.time() - t)
 })
-system(paste0("say 'images done.'"))
+# system(paste0("say 'images done.'"))
 
 # img <- read_img(files[1])
 # plot_channels(img)
