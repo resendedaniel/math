@@ -13,7 +13,7 @@ library(reshape2)
 
 # path <- "~/Pictures/ushuaia/stunning_landscape"
 # path <- "~/Pictures/ushuaia/stunning_personal"
-path <- "~/Pictures/macro"
+path <- "~/img/zeca"
 files <- list.files(path)
 files <- paste(path, files, sep="/")
 files <- files[!grepl("treated", files)]
