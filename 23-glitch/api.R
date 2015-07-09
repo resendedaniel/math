@@ -9,16 +9,19 @@ read_img <- function(file) {
 
 save_img <- function(img, destfile) {
     # Save
-    
     if(!file.exists(paste(path, "treated", sep="/"))) { dir.create(paste(path, "treated", sep="/")) }
     
     out <- array(c(img[[1]], img[[2]], img[[3]]), c(dim(img[[1]]), 3))
     writeJPEG(out, destfile)
 }
 
-apply_filter <- function(filter, img) {
-    # Apply filter on each image    
-    do.call(filter, list(img))
+apply_filter <- function(filter, img, color=NULL) {
+    # Apply filter on each image
+    if(is.null(color)) {
+        do.call(filter, list(img))
+    } else {
+        do.call(filter, list(img, color))
+    }
 }
 
 plot_channels <- function(img) {

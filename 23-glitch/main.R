@@ -11,31 +11,54 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-# path <- "~/Pictures/ushuaia/stunning_landscape"
-# path <- "~/Pictures/ushuaia/stunning_personal"
 path <- "~/img/zeca"
+# path <- "~/Pictures/minimalism"
+
 files <- list.files(path)
 files <- paste(path, files, sep="/")
 files <- files[!grepl("treated", files)]
 
-abysm <- sapply(files[-c(1:14)], function(file) {
-    filter <- c("invert_color",
-                "random_sidewalk",
-                "extrude",
-                "single_col",
-                "noise_on_standard_deviation",
-                "pixel_sort_color",
-                "pixel_sort_sd")[7]
+abysm <- sapply(files[-c(1:2)], function(file) {
 
     t <- proc.time()
-    size <- file.info(file)$size / (2^10)^10
-    
-    img <- apply_filter(filter, read_img(file))
+    size <- round(file.info(file)$size / (2^20), 2)
+    raw_img <- read_img(file)
     file <- sub(".jpg", "", file)
-    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/", filter, "-"), file)
-    destfile <- paste0(destfile, ".jpg")
+    file <- sub(".jpeg", "", file)
+    file <- sub(".JPG", "", file)
+    file <- sub(".JPEG", "", file)
+
+    f1 <- "pixel_sort_sd"
+    img <- apply_filter(f1, raw_img)
+    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+    destfile <- paste0(destfile, "-", f1, ".jpg")
     save_img(img, destfile)
-    cat("\n", file, "\n", "size: ", paste0(size, "mb"), "\n\n")
+    rm(img)
+    cat("\n")
+    
+    f2 <- "pixel_sort_color"
+    img <- apply_filter(f2, raw_img, color="red")
+    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+    destfile <- paste0(destfile, "-", f2, "-red", ".jpg")
+    save_img(img, destfile)
+    rm(img)
+    cat("\n")
+    
+    img <- apply_filter(f2, raw_img, color="green")
+    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+    destfile <- paste0(destfile, "-", f2, "-green", ".jpg")
+    save_img(img, destfile)
+    rm(img)
+    cat("\n")
+    
+    img <- apply_filter(f2, raw_img, color="green")
+    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+    destfile <- paste0(destfile, "-", f2, "-blue", ".jpg")
+    save_img(img, destfile)
+    rm(img)
+    cat("\n")
+
+    cat(file, "\n", "size: ", paste0(size, "mb"), "\n\n")
     print(proc.time() - t)
 })
 # system(paste0("say 'images done.'"))
