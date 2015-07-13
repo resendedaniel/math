@@ -11,14 +11,14 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-path <- "~/img/zeca"
-# path <- "~/Pictures/minimalism"
+path <- "~/img/judson"
+# path <- "~/Pictures/instagram"
 
 files <- list.files(path)
 files <- paste(path, files, sep="/")
 files <- files[!grepl("treated", files)]
 
-abysm <- sapply(files[-c(1:2)], function(file) {
+abysm <- sapply(files, function(file) {
 
     t <- proc.time()
     size <- round(file.info(file)$size / (2^20), 2)
