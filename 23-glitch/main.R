@@ -11,7 +11,7 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-path <- "~/img/judson"
+path <- "~/img/daniel_barter"
 # path <- "~/Pictures/instagram"
 
 files <- list.files(path)
