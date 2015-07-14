@@ -11,8 +11,8 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-path <- "~/img/daniel_barter"
-# path <- "~/Pictures/instagram"
+path <- "~/img/sky"
+# path <- "~/Desktop/treat"
 
 files <- list.files(path)
 files <- paste(path, files, sep="/")
@@ -58,8 +58,9 @@ abysm <- sapply(files, function(file) {
     rm(img)
     cat("\n")
 
-    cat(file, "\n", "size: ", paste0(size, "mb"), "\n\n")
+    cat(file, "\n", "size: ", paste0(size, "mb"), "\n")
     print(proc.time() - t)
+    cat("\n")
 })
 # system(paste0("say 'images done.'"))
 
