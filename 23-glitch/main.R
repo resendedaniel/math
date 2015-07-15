@@ -11,7 +11,7 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-path <- "~/img/sky"
+path <- "~/img/botanical"
 # path <- "~/Desktop/treat"
 
 files <- list.files(path)
