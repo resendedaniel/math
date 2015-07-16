@@ -94,3 +94,26 @@ pixel_sort_sd <- function(img) {
     
     img
 }
+
+pixel_sort_var <- function(img) {
+    rows <- dim(img[[1]])[1]
+    cols <- dim(img[[1]])[2]
+    for(i in 1:cols) {
+        if(i %% round(cols/100) == 0) {
+            cat(paste0(round(i / cols * 100), "% "))
+        }
+        ind <- sapply(1:rows, function(j) {
+            var(unlist(lapply(img, function(x) {
+                x[j, i]
+            })))
+        })
+        ind <- rev(order(ind))
+        img <- lapply(img, function(x) {
+            curr <- x[,i]
+            x[,i] <- curr[ind]
+            x
+        })
+    }
+    
+    img
+}

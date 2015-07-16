@@ -1,0 +1,5 @@
+Loading required package: methods
+Loading required package: grid
+Error in readJPEG(file) : unable to open /Users/danielresende/img/sky/
+Calls: sapply -> lapply -> FUN -> read_img -> readJPEG -> .Call
+Execution halted
