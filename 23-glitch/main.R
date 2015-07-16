@@ -29,7 +29,7 @@ abysm <- sapply(files, function(file) {
     file <- sub(".JPEG", "", file)
 
     f0 <- "pixel_sort_sd"
-    img <- apply_filter(f1, raw_img)
+    img <- apply_filter(f0, raw_img)
     destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
     destfile <- paste0(destfile, "-", f0, ".jpg")
     save_img(img, destfile)
