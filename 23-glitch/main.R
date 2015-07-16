@@ -12,7 +12,7 @@ library(gridExtra)
 library(reshape2)
 
 path <- "~/img/botanical"
-path <- "~/Pictures/cityporn"
+# path <- "~/Pictures/cityporn"
 
 files <- list.files(path)
 files <- paste(path, files, sep="/")
