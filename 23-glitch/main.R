@@ -11,12 +11,12 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-path <- "~/img/botanical"
-# path <- "~/Pictures/cityporn"
+# path <- "~/img/botanical"
+path <- "~/Pictures/pitaia"
 
 files <- list.files(path)
 files <- paste(path, files, sep="/")
-files <- files[!grepl("treated", files)]
+files <- rev(files[!grepl("treated", files)])
 
 abysm <- sapply(files, function(file) {
 
@@ -28,13 +28,13 @@ abysm <- sapply(files, function(file) {
     file <- sub(".JPG", "", file)
     file <- sub(".JPEG", "", file)
 
-    f0 <- "pixel_sort_sd"
-    img <- apply_filter(f0, raw_img)
-    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
-    destfile <- paste0(destfile, "-", f0, ".jpg")
-    save_img(img, destfile)
-    rm(img)
-    cat("\n")
+#     f0 <- "pixel_sort_sd"
+#     img <- apply_filter(f0, raw_img)
+#     destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+#     destfile <- paste0(destfile, "-", f0, ".jpg")
+#     save_img(img, destfile)
+#     rm(img)
+#     cat("\n")
     
     f1 <- "pixel_sort_var"
     img <- apply_filter(f1, raw_img)
@@ -44,33 +44,33 @@ abysm <- sapply(files, function(file) {
     rm(img)
     cat("\n")
     
-#     f2 <- "pixel_sort_color"
-#     img <- apply_filter(f2, raw_img, color="red")
-#     destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
-#     destfile <- paste0(destfile, "-", f2, "-red", ".jpg")
-#     save_img(img, destfile)
-#     rm(img)
-#     cat("\n")
-#     
-#     img <- apply_filter(f2, raw_img, color="green")
-#     destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
-#     destfile <- paste0(destfile, "-", f2, "-green", ".jpg")
-#     save_img(img, destfile)
-#     rm(img)
-#     cat("\n")
-#     
-#     img <- apply_filter(f2, raw_img, color="green")
-#     destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
-#     destfile <- paste0(destfile, "-", f2, "-blue", ".jpg")
-#     save_img(img, destfile)
-#     rm(img)
-#     cat("\n")
+    f2 <- "pixel_sort_color"
+    img <- apply_filter(f2, raw_img, color="red")
+    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+    destfile <- paste0(destfile, "-", f2, "-red", ".jpg")
+    save_img(img, destfile)
+    rm(img)
+    cat("\n")
+    
+    img <- apply_filter(f2, raw_img, color="green")
+    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+    destfile <- paste0(destfile, "-", f2, "-green", ".jpg")
+    save_img(img, destfile)
+    rm(img)
+    cat("\n")
+    
+    img <- apply_filter(f2, raw_img, color="green")
+    destfile <- gsub(paste0(path,"/"), paste0(path, "/treated/"), file)
+    destfile <- paste0(destfile, "-", f2, "-blue", ".jpg")
+    save_img(img, destfile)
+    rm(img)
+    cat("\n")
 
     cat(file, "\n", "size: ", paste0(size, "mb"), "\n")
     print(proc.time() - t)
     cat("\n")
 })
-# system(paste0("say 'images done.'"))
+system(paste0("say 'images done.'"))
 
 # img <- read_img(files[1])
 # plot_channels(img)
